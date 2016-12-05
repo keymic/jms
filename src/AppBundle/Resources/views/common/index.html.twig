@@ -1,0 +1,118 @@
+{% extends 'AppBundle::common/container.html.twig' %}
+{% block body %}
+{{ dump() }}
+    <div class="main">
+        <div class="" ng-controller="januszelista">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 first-col">
+                        <h2 class="col-title"><i class="fa fa-line-chart" aria-hidden="true"></i> <span>Bieżący rok</span></h2>
+                        <div class="searchInList">
+                            <h2>Wyszukaj pracownika</h2>
+                            <div class="row">
+                                <div class="form-item col-sm-6">
+                                    <input type="text" name="searchinlist" id="searchinlist" class="form-control" ng-model="search.name" placeholder="Wpisz imię lub/i nazwisko" />
+                                </div>
+                                <div class="form-item col-sm-6">
+                                    <select name="unit" id="select_unit" ng-model="search.unit" class="form-control">
+                                        <option value="" selected="selected">Wszyscy</option>
+                                        <option value="1">Unit 1</option>
+                                        <option value="2">Unit 2</option>
+                                        <option value="3">Unit 3</option>
+                                        <option value="4">Adminy</option>
+                                        <option value="5">Testery</option>
+                                        <option value="6">Wdrożeniowcy</option>
+                                        <option value="7">Fabrado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="janusze-list">
+                            <div class="janusze-item" data-item-id="[[item.id]]" ng-repeat="item in list|orderBy: 'count' : true | filter:search" on-finish-render="ngRepeatFinished">
+                                <div class="janusze-info">
+                                    <div class="mask" style="width: [[percentageWidth(item.count)]]"></div>
+                                    <div class="name">[[item.name]]</div>
+                                    <div class="count">[[item.count]]</div>
+                                    <div class="addnew" data-dialog="#addNewJanusz" data-title="Dodanie Januszu dla pracownika [[item.name]]"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>
+                                </div>
+                                <div class="janusze-more-info hidden">
+                                    <div class="list">
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="date">22.11.2016</div>
+                                            <div class="desc">Wszystko wyjebało się</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="col-title"><i class="fa fa-bar-chart" aria-hidden="true"></i> <span>Najlepsze w bieżącym roku</span></h2>
+                        <div class="top3InThisYear">
+                            <div class="top3InThisYear-item position[[$index+1]]" ng-repeat="item in list|orderBy: 'count' : true | limitTo:3">
+                                <div class="bottom"><span>[[$index+1]]</span></div>
+                                <div class="name">[[item.name]]</div>
+                            </div>
+                        </div>
+                        <h2 class="col-title"><i class="fa fa-trophy" aria-hidden="true"></i> <span>Mistrzowie poprzednich lat</span></h2>
+                        <div class="topjanusz-list">
+                            <div class="topjanusz-item">
+                                <div class="year">2015</div>
+                                <div class="name">Janusz</div>
+                            </div>
+                            <div class="topjanusz-item">
+                                <div class="year">2014</div>
+                                <div class="name">Janusz</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'AppBundle::common/partials/addJanuszForm.html.twig' %}
+{% endblock %}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pl-PL" ng-app="morelejanusze">
+
+{% block head %}
+    {% include 'AppBundle::common/partials/head.html.twig' with {styles: block('styles')} %}
+{% endblock %}
+
+<body>
+    {% include 'AppBundle::common/partials/header.html.twig' %}
+    <div class="main">
+        {% block body %}
+
+        {% endblock %}
+    </div>
+
+    <script type="text/javascript" src="/static/js/angular.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/static/js/app.js"></script>
+</body>
+</html>

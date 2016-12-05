@@ -29,15 +29,14 @@ class DefaultController extends Controller
             foreach ($januszes as $janusz) {
                 if ($janusz->getPearson() == $pearson) {
                     $ret[$pkey]['janusze']['count']++;
-                    $ret[$pkey]['janusze'][] = ['reason' => $janusz->getReason(), 'date' => $janusz->getDate()];
+                    $ret[$pkey]['janusze']['items'][] = ['reason' => $janusz->getReason(), 'date' => $janusz->getDate()];
                 }
             }
         }
-        dump(json_encode($ret));
-        exit;
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
+        return $this->render('AppBundle:common:index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
+            'januszesList' => $ret
         ]);
     }
 
