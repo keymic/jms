@@ -26,6 +26,7 @@ class DefaultController extends Controller
 
         $ret = [];
         foreach ($pearsons as $pkey => $pearson) {
+            $ret[$pkey]['id'] = $pearson->getId();
             $ret[$pkey]['name'] = $pearson->getName();
             $ret[$pkey]['surname'] = $pearson->getSurname();
             $ret[$pkey]['unit'] = 'Unit 3';
@@ -33,7 +34,7 @@ class DefaultController extends Controller
             foreach ($januszes as $janusz) {
                 if ($janusz->getPearson() == $pearson) {
                     $ret[$pkey]['janusze']['count']++;
-                    $ret[$pkey]['janusze']['items'][] = ['reason' => $janusz->getReason(), 'date' => $janusz->getDate()];
+                    $ret[$pkey]['janusze']['items'][] = ['reason' => $janusz->getReason(), 'date' => $janusz->getDate()->format('Y-m-d H:i:s')];
                 }
             }
         }
@@ -60,6 +61,7 @@ class DefaultController extends Controller
 
         $ret = [];
         foreach ($pearsons as $pkey => $pearson) {
+            $ret[$pkey]['id'] = $pearson->getId();
             $ret[$pkey]['name'] = $pearson->getName();
             $ret[$pkey]['surname'] = $pearson->getSurname();
             $ret[$pkey]['unit'] = 'Unit 3';
@@ -67,7 +69,7 @@ class DefaultController extends Controller
             foreach ($januszes as $janusz) {
                 if ($janusz->getPearson() == $pearson) {
                     $ret[$pkey]['janusze']['count']++;
-                    $ret[$pkey]['janusze']['items'][] = ['reason' => $janusz->getReason(), 'date' => $janusz->getDate()];
+                    $ret[$pkey]['janusze']['items'][] = ['reason' => $janusz->getReason(), 'date' => $janusz->getDate()->format('Y-m-d H:i:s');];
                 }
             }
         }
