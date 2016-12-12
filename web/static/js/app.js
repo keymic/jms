@@ -22,119 +22,94 @@ app.directive('onFinishRender', function ($timeout) {
 
 app.controller("januszelista", ['$scope', '$http', function ($scope, $http) {
     var maxCount = 0;
+    $scope.showSendLoader = false;
     $scope.getList = function () {
-        var list = [
-            {
-                "id": 1,
-                "name": "Monika Trójniak",
-                "count": 22,
-                "unit": 6
-            },
-            {
-                "id": 1,
-                "name": "Szymon Spyra",
-                "count": 5,
-                "unit": 2
-            },
-            {
-                "id": 1,
-                "name": "Maciek Jaros",
-                "count": 8,
-                "unit": 2
-            },
-            {
-                "id": 1,
-                "name": "Paweł Pulit",
-                "count": 3,
-                "unit": 2
-            },
-            {
-                "id": 1,
-                "name": "Rafał Kołaczek",
-                "count": 1,
-                "unit": 2
-            },
-            {
-                "id": 1,
-                "name": "Ivan Kuziuk",
-                "count": 1,
-                "unit": 2
-            },
-            {
-                "id": 1,
-                "name": "Krzysztof Bartyzel",
-                "count": 1,
-                "unit": 7
-            },
-            {
-                "id": 1,
-                "name": "Maciej Górecki",
-                "count": 10,
-                "unit": 2
-            },
-            {
-                "id": 1,
-                "name": "Wojciech Ziomek",
-                "count": 7,
-                "unit": 1
-            },
-            {
-                "id": 1,
-                "name": "Agnieszka Musielak",
-                "count": 2,
-                "unit": 2
-            },
-            {
-                "id": 1,
-                "name": "Michał Gawryjołek",
-                "count": 5,
-                "unit": 5
-            },
-            {
-                "id": 1,
-                "name": "Bartosz Rokita",
-                "count": 2,
-                "unit": 3
-            },
-            {
-                "id": 1,
-                "name": "Michal Skwarek",
-                "count": 1,
-                "unit": 2
-            },
-            {
-                "id": 1,
-                "name": "Tomasz Grochowski",
-                "count": 30,
-                "unit": 2
-            },
-            {
-                "id": 1,
-                "name": "Przemek Szarlej",
-                "count": 25,
-                "unit": 1
+        $scope.showPreloader = true;
+        $http.get('/getpearsons').then(function successCallback(response) {
+            if(response.statusText.toUpperCase() == 'OK'){
+                console.log(response.data);
+                $scope.list = response.data;
+                $scope.showPreloader = false;
+                maxCount = response.data.reduce(function(max, x) { return (x.janusze.count > max) ? x.janusze.count : max; }, 0)
             }
-        ];
-        $scope.list = list;
-        maxCount = list.reduce(function(max, x) { return (x.count > max) ? x.count : max; }, 0)
-
-//         $http.get('file:///C:/morele/janusze/api/list.json').then(function successCallback(response) {
-// console.log(response);
-//         }, function errorCallback(response) {
-//             console.log(response);
-//         });
+        }, function errorCallback(response) {
+            console.log(response);
+        });
     };
 
     $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
         $('.janusze-info').on('click', function (e) {
             e.preventDefault();
-            console.log($(this));
             $(this).siblings('.janusze-more-info').slideToggle();
         });
     });
+
     $scope.percentageWidth = function (count) {
         return parseInt(count)*100/parseInt(maxCount) + '%';
     };
+
+    $scope.addNewJanusz = function ($form) {
+        var $descInput = $form.find('textarea#addjanuszOpis'),
+            id = $form.find('input#addjanuszPersone').val().trim(),
+            desc = $descInput.val().trim(),
+            $preloader = $form.siblings('div.preloader-section');
+
+        $preloader.removeClass('hidden');
+        $http({
+            method: 'POST',
+            url: '/addjanusz',
+            contentType: 'application/json; charset=UTF-8',
+            data: {
+                janusz_pearson: parseInt(id),
+                janusz_opis: desc
+            }
+        }).then(function successCallback(response) {
+            if(response.statusText.toUpperCase() == 'OK'){
+                $.notify(response.data, {type:"success"});
+            }
+            else {
+                $.notify(response.data, {type:"danger"});
+            }
+            $preloader.addClass('hidden');
+            $('body').removeClass('dialog-open');
+            setTimeout(function () {
+                $('body').removeClass('dialog-show');
+                setTimeout(function () {
+                    $('body').find('.dialog-outer').remove();
+                }, 100)
+            }, 300)
+            $scope.getList();
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
+    $('body').on('submit', 'form#addjanusz', function (e) {
+        e.preventDefault();
+        var $form = $(this),
+            $descInput = $form.find('textarea#addjanuszOpis');
+        if(checkValidate()){
+            $scope.addNewJanusz($form);
+        }
+        else {
+            $.notify("Pole z opisem nie może być puste!", {type:"danger"});
+        }
+
+        $descInput.on('change', function () {
+            checkValidate();
+        });
+        function checkValidate() {
+            if($form.find('input#addjanuszPersone').val().trim() != '' && $form.find('input#addjanuszPersone').val().trim() != ' ' && $descInput.val().trim() !='' && $descInput.val().trim() != ' '){
+                $descInput.removeClass('unvalid');
+                return true;
+            }
+            else {
+                $descInput.addClass('unvalid');
+                return false;
+            }
+        }
+    })
+
     $scope.getList();
 }]);
 
@@ -145,11 +120,10 @@ Array.max = function( array ){
 $('body').on('click', '[data-dialog]', function (e) {
     e.preventDefault();
     var $this = $(this);
-    console.log($this.data('dialog'), $this.data('title'));
-    dialog($this.data('dialog'), $this.data('title'));
+    dialog($this, $this.data('dialog'), $this.data('title'));
 });
 
-function dialog(content, title) {
+function dialog($this, content, title, close) {
     var dialog =
         '<div class="dialog-outer">'+
             '<div class="dialog">'+
@@ -181,7 +155,6 @@ function dialog(content, title) {
         }
     });
 
-
     function dialogOpen() {
         $('body').append(dialog);
         setTimeout(function () {
@@ -190,6 +163,10 @@ function dialog(content, title) {
                 $('body').addClass('dialog-open');
             }, 300)
         }, 100)
+        if($this.data('copy-id')){
+            console.log($this.data('janusz-id'));
+            $('input#addjanuszPersone').val($this.data('janusz-id'))
+        }
     }
 
     function dialogClose() {
