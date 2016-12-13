@@ -69,8 +69,17 @@ a:hover{
     left: 0;
     right: 0;
     transform: translate3d(0,0,0);
-    height: 50px;
+    height: 60px;
     background: #0a0b0d;
+    padding: 5px 0;
+}
+
+.logo{
+    height: 50px;
+}
+
+.logo img{
+    max-height: 100%;
 }
 
 .main{

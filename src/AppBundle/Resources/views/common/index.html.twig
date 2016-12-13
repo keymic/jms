@@ -1,70 +1,66 @@
 {% extends 'AppBundle::common/container.html.twig' %}
 {% block body %}
-    <div class="main">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6 first-col">
-                    <h2 class="col-title"><i class="fa fa-line-chart" aria-hidden="true"></i> <span>Bieżący rok</span></h2>
-                    <div class="searchInList">
-                        <h2>Wyszukaj pracownika</h2>
-                        <div class="row">
-                            <div class="form-item col-sm-6">
-                                <input type="text" name="searchinlist" id="searchinlist" class="form-control" ng-model="search.full_name" placeholder="Wpisz imię lub/i nazwisko" />
-                            </div>
-                            <div class="form-item col-sm-6">
-                                <select name="unit" id="select_unit" ng-model="search.unit" class="form-control">
-                                    <option value="" selected="selected">Wszyscy</option>
-                                    <option value="Unit 1">Unit 1</option>
-                                    <option value="Unit 2">Unit 2</option>
-                                    <option value="Unit 3">Unit 3</option>
-                                    <option value="Adminy">Adminy</option>
-                                    <option value="Testery">Testery</option>
-                                    <option value="Wdrożeniowcy">Wdrożeniowcy</option>
-                                    <option value="Fabrado">Fabrado</option>
-                                </select>
-                            </div>
-                        </div>
+    <div class="row">
+        <div class="col-md-6 first-col">
+            <h2 class="col-title"><i class="fa fa-line-chart" aria-hidden="true"></i> <span>Bieżący rok</span></h2>
+            <div class="searchInList">
+                <h2>Wyszukaj pracownika</h2>
+                <div class="row">
+                    <div class="form-item col-sm-6">
+                        <input type="text" name="searchinlist" id="searchinlist" class="form-control" ng-model="search.full_name" placeholder="Wpisz imię lub/i nazwisko" />
                     </div>
-                    <div class="preloader" ng-if="showPreloader"><img src="/static/img/preloader.gif" align="Preloader" /></div>
-                    <div class="janusze-list" ng-if="!showPreloader && list.length > 0">
-                        <div class="janusze-item" data-item-id="[[item.id]]" ng-repeat="item in list|orderBy: 'janusze.count' : true | filter:search" on-finish-render="ngRepeatFinished">
-                            <div class="janusze-info">
-                                <div class="mask" style="width: [[percentageWidth(item.janusze.count)]]"></div>
-                                <div class="name">[[item.full_name]]</div>
-                                <div class="count">[[item.janusze.count]]</div>
-                            </div>
-                            <div class="janusze-more-info hidden" ng-if="item.janusze.count > 0">
-                                <div class="list">
-                                    <div class="item" ng-repeat="janusz in item.janusze.items|orderBy: 'date' : true">
-                                        <div class="date">[[janusz.date]]</div>
-                                        <div class="desc">[[janusz.reason]]</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="addnew" data-dialog="#addNewJanusz" data-copy-id="true" data-janusz-id="[[item.id]]" data-title="Dodanie Januszu dla pracownika [[item.full_name]]"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>
-                        </div>
+                    <div class="form-item col-sm-6">
+                        <select name="unit" id="select_unit" ng-model="search.unit" class="form-control">
+                            <option value="" selected="selected">Wszyscy</option>
+                            <option value="Unit 1">Unit 1</option>
+                            <option value="Unit 2">Unit 2</option>
+                            <option value="Unit 3">Unit 3</option>
+                            <option value="Adminy">Adminy</option>
+                            <option value="Testery">Testery</option>
+                            <option value="Wdrożeniowcy">Wdrożeniowcy</option>
+                            <option value="Fabrado">Fabrado</option>
+                        </select>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <h2 class="col-title"><i class="fa fa-bar-chart" aria-hidden="true"></i> <span>Najlepsze w bieżącym roku</span></h2>
-                    <div class="preloader" ng-if="showPreloader"><img src="/static/img/preloader.gif" align="Preloader" /></div>
-                    <div class="top3InThisYear" ng-if="!showPreloader">
-                        <div class="top3InThisYear-item position[[$index+1]]" ng-repeat="item in list|orderBy: 'janusze.count' : true | limitTo:3">
-                            <div class="bottom"><span>[[$index+1]]</span></div>
-                            <div class="name">[[item.full_name]]</div>
+            </div>
+            <div class="preloader" ng-if="showPreloader"><img src="/static/img/preloader.gif" align="Preloader" /></div>
+            <div class="janusze-list" ng-if="!showPreloader && list.length > 0">
+                <div class="janusze-item" data-item-id="[[item.id]]" ng-repeat="item in list|orderBy: 'janusze.count' : true | filter:search" on-finish-render="ngRepeatFinished">
+                    <div class="janusze-info">
+                        <div class="mask" style="width: [[percentageWidth(item.janusze.count)]]"></div>
+                        <div class="name">[[item.full_name]]</div>
+                        <div class="count">[[item.janusze.count]]</div>
+                    </div>
+                    <div class="janusze-more-info hidden" ng-if="item.janusze.count > 0">
+                        <div class="list">
+                            <div class="item" ng-repeat="janusz in item.janusze.items|orderBy: 'date' : true">
+                                <div class="date">[[janusz.date]]</div>
+                                <div class="desc">[[janusz.reason]]</div>
+                            </div>
                         </div>
                     </div>
-                    <h2 class="col-title"><i class="fa fa-trophy" aria-hidden="true"></i> <span>Mistrzowie poprzednich lat</span></h2>
-                    <div class="topjanusz-list">
-                        <div class="topjanusz-item">
-                            <div class="year">2015</div>
-                            <div class="name">Janusz</div>
-                        </div>
-                        <div class="topjanusz-item">
-                            <div class="year">2014</div>
-                            <div class="name">Janusz</div>
-                        </div>
-                    </div>
+                    <div class="addnew" data-dialog="#addNewJanusz" data-copy-id="true" data-janusz-id="[[item.id]]" data-title="Dodanie Januszu dla pracownika [[item.full_name]]"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2 class="col-title"><i class="fa fa-bar-chart" aria-hidden="true"></i> <span>Najlepsze w bieżącym roku</span></h2>
+            <div class="preloader" ng-if="showPreloader"><img src="/static/img/preloader.gif" align="Preloader" /></div>
+            <div class="top3InThisYear" ng-if="!showPreloader">
+                <div class="top3InThisYear-item position[[$index+1]]" ng-repeat="item in list|orderBy: 'janusze.count' : true | limitTo:3">
+                    <div class="bottom"><span>[[$index+1]]</span></div>
+                    <div class="name">[[item.full_name]]</div>
+                </div>
+            </div>
+            <h2 class="col-title"><i class="fa fa-trophy" aria-hidden="true"></i> <span>Mistrzowie poprzednich lat</span></h2>
+            <div class="topjanusz-list">
+                <div class="topjanusz-item">
+                    <div class="year">2015</div>
+                    <div class="name">Janusz</div>
+                </div>
+                <div class="topjanusz-item">
+                    <div class="year">2014</div>
+                    <div class="name">Janusz</div>
                 </div>
             </div>
         </div>
