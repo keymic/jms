@@ -9,7 +9,7 @@
                         <h2>Wyszukaj pracownika</h2>
                         <div class="row">
                             <div class="form-item col-sm-6">
-                                <input type="text" name="searchinlist" id="searchinlist" class="form-control" ng-model="search.name" ng-model="search.surname" placeholder="Wpisz imię lub/i nazwisko" />
+                                <input type="text" name="searchinlist" id="searchinlist" class="form-control" ng-model="search.full_name" placeholder="Wpisz imię lub/i nazwisko" />
                             </div>
                             <div class="form-item col-sm-6">
                                 <select name="unit" id="select_unit" ng-model="search.unit" class="form-control">
@@ -26,11 +26,11 @@
                         </div>
                     </div>
                     <div class="preloader" ng-if="showPreloader"><img src="/static/img/preloader.gif" align="Preloader" /></div>
-                    <div class="janusze-list" ng-if="!showPreloader">
+                    <div class="janusze-list" ng-if="!showPreloader && list.length > 0">
                         <div class="janusze-item" data-item-id="[[item.id]]" ng-repeat="item in list|orderBy: 'janusze.count' : true | filter:search" on-finish-render="ngRepeatFinished">
                             <div class="janusze-info">
                                 <div class="mask" style="width: [[percentageWidth(item.janusze.count)]]"></div>
-                                <div class="name">[[item.name]] [[item.surname]]</div>
+                                <div class="name">[[item.full_name]]</div>
                                 <div class="count">[[item.janusze.count]]</div>
                             </div>
                             <div class="janusze-more-info hidden" ng-if="item.janusze.count > 0">
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="addnew" data-dialog="#addNewJanusz" data-copy-id="true" data-janusz-id="[[item.id]]" data-title="Dodanie Januszu dla pracownika [[item.name]] [[item.surname]]"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>
+                            <div class="addnew" data-dialog="#addNewJanusz" data-copy-id="true" data-janusz-id="[[item.id]]" data-title="Dodanie Januszu dla pracownika [[item.full_name]]"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="top3InThisYear" ng-if="!showPreloader">
                         <div class="top3InThisYear-item position[[$index+1]]" ng-repeat="item in list|orderBy: 'janusze.count' : true | limitTo:3">
                             <div class="bottom"><span>[[$index+1]]</span></div>
-                            <div class="name">[[item.name]] [[item.surname]]</div>
+                            <div class="name">[[item.full_name]]</div>
                         </div>
                     </div>
                     <h2 class="col-title"><i class="fa fa-trophy" aria-hidden="true"></i> <span>Mistrzowie poprzednich lat</span></h2>

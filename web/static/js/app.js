@@ -37,13 +37,6 @@ app.controller("januszelista", ['$scope', '$http', function ($scope, $http) {
         });
     };
 
-    $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-        $('.janusze-info').on('click', function (e) {
-            e.preventDefault();
-            $(this).siblings('.janusze-more-info').slideToggle();
-        });
-    });
-
     $scope.percentageWidth = function (count) {
         return parseInt(count)*100/parseInt(maxCount) + '%';
     };
@@ -116,6 +109,12 @@ app.controller("januszelista", ['$scope', '$http', function ($scope, $http) {
 Array.max = function( array ){
     return Math.max.apply( Math, array );
 };
+
+$('body').on('click', '.janusze-info', function (e) {
+    e.preventDefault();
+    $(this).toggleClass('open');
+    $(this).siblings('.janusze-more-info').slideToggle();
+});
 
 $('body').on('click', '[data-dialog]', function (e) {
     e.preventDefault();
