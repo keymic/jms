@@ -9,6 +9,12 @@ body{
     background: #252830;
     color: #cfd2da;
 }
+
+body.theme-light{
+    background: #FAFAFA;
+    color: #252830;
+}
+
 *{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -75,12 +81,23 @@ a:hover{
     z-index: 10;
 }
 
+body.theme-light .header{
+    background: #252830;
+}
+
 .logo{
+    float: left;
     height: 50px;
 }
 
 .logo img{
     max-height: 100%;
+}
+
+.select-theme{
+    float: right;
+    width: 190px;
+    margin: 3px 0;
 }
 
 .main{

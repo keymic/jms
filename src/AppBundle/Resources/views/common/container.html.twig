@@ -4,8 +4,7 @@
 {% block head %}
     {% include 'AppBundle::common/partials/head.html.twig' with {styles: block('styles')} %}
 {% endblock %}
-
-<body ng-controller="januszelista">
+<body ng-controller="januszelista" class="theme-{{ app.request.cookies.get("theme-type") ? app.request.cookies.get("theme-type") : 'dark' }}">
     {% include 'AppBundle::common/partials/header.html.twig' %}
     <div class="main">
         <div class="container-fluid">
@@ -17,6 +16,7 @@
 
     <script type="text/javascript" src="/static/js/angular.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/static/js/jquery.notify.js"></script>
     <script type="text/javascript" src="/static/js/app.js"></script>
 </body>
