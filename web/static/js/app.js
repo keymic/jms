@@ -116,6 +116,17 @@ $('body').on('click', '.janusze-info', function (e) {
     $(this).siblings('.janusze-more-info').slideToggle();
 });
 
+$('body').on('change', 'select#select_theme', function (e) {
+    var type = $(this).val();
+    $.cookie('theme-type', type);
+    if(type=='dark'){
+        $('body').removeClass('theme-light').addClass('theme-dark');
+    }
+    else {
+        $('body').removeClass('theme-dark').addClass('theme-light');
+    }
+});
+
 $('body').on('click', '[data-dialog]', function (e) {
     e.preventDefault();
     var $this = $(this);

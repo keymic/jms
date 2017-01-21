@@ -1,5 +1,11 @@
 <header class="header">
     <div class="container-fluid">
         <div class="logo"><img src="/static/img/logo.png" a="JMS"></div>
+        <div class="select-theme">
+            <select name="select_theme" id="select_theme" class="form-control">
+                <option value="dark" {% if app.request.cookies.get("theme-type") and app.request.cookies.get("theme-type") == 'dark' %}selected="selected"{% endif %}>Ciemny szablon</option>
+                <option value="light" {% if app.request.cookies.get("theme-type") and app.request.cookies.get("theme-type") == 'light' %}selected="selected"{% endif %}>Jasny szablon</option>
+            </select>
+        </div>
     </div>
 </header>
