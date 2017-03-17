@@ -14,5 +14,10 @@
         <option name="fixed"/>
       </options>
     </field>
+    <field name="unit" type="string" column="unit" length="45" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
   </entity>
 </doctrine-mapping>

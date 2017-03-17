@@ -29,7 +29,7 @@ class DefaultController extends Controller
             $ret[$pkey]['id'] = $pearson->getId();
             $ret[$pkey]['name'] = $pearson->getName();
             $ret[$pkey]['surname'] = $pearson->getSurname();
-            $ret[$pkey]['unit'] = 'Unit 3';
+            $ret[$pkey]['unit'] = $pearson->getUnit();
             $ret[$pkey]['janusze']['count'] = 0;
             foreach ($januszes as $janusz) {
                 if ($janusz->getPearson() == $pearson) {
@@ -65,7 +65,7 @@ class DefaultController extends Controller
             $ret[$pkey]['name'] = $pearson->getName();
             $ret[$pkey]['surname'] = $pearson->getSurname();
             $ret[$pkey]['full_name'] = $pearson->getName() .' '. $pearson->getSurname();
-            $ret[$pkey]['unit'] = 'Unit 3';
+            $ret[$pkey]['unit'] = $pearson->getUnit();
             $ret[$pkey]['janusze']['count'] = 0;
             foreach ($januszes as $janusz) {
                 if ($janusz->getPearson() == $pearson) {

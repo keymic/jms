@@ -27,6 +27,13 @@ class Pearson
     private $surname;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="unit", type="string", length=45, nullable=false)
+     */
+    private $unit;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -83,6 +90,30 @@ class Pearson
     public function getSurname()
     {
         return $this->surname;
+    }
+
+    /**
+     * Set unit
+     *
+     * @param string $unit
+     *
+     * @return Pearson
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return string
+     */
+    public function getUnit()
+    {
+        return $this->unit;
     }
 
     /**

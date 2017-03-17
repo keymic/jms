@@ -1,0 +1,2 @@
+ALTER TABLE `pearson`
+ADD COLUMN `unit` VARCHAR(45) NOT NULL AFTER `surname`;
