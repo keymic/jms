@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Janusz;
-use AppBundle\Entity\Pearson;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +20,8 @@ class DefaultController extends Controller
         $pearsonRepository = $em->getRepository('AppBundle:Pearson');
         $pearsons = $pearsonRepository->findAll();
 
-        $januszRepository = $em->getRepository('AppBundle:Janusz');
-        $januszes = $januszRepository->findAll();
+        $date = date('Y') . '-01-01';
+        $januszes = $em->createQuery("select j from AppBundle\Entity\Janusz j where j.date > '$date'")->getResult();
 
         $ret = [];
         foreach ($pearsons as $pkey => $pearson) {
@@ -56,8 +55,8 @@ class DefaultController extends Controller
         $pearsonRepository = $em->getRepository('AppBundle:Pearson');
         $pearsons = $pearsonRepository->findAll();
 
-        $januszRepository = $em->getRepository('AppBundle:Janusz');
-        $januszes = $januszRepository->findAll();
+        $date = date('Y') . '-01-01';
+        $januszes = $em->createQuery("select j from AppBundle\Entity\Janusz j where j.date > '$date'")->getResult();
 
         $ret = [];
         foreach ($pearsons as $pkey => $pearson) {
