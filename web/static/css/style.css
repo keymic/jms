@@ -218,9 +218,6 @@ body.theme-light .header{
     margin-left: -90px;
     padding-left: 95px;
     width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 @media (max-width: 767px){
