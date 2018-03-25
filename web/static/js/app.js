@@ -22,18 +22,24 @@ app.directive('onFinishRender', function ($timeout) {
 
 app.controller("januszelista", ['$scope', '$http', function ($scope, $http) {
     var maxCount = 0;
+    var s = window.location.href;
+    var year = s.match(/\d+/)
+    if(year == undefined){
+        var d = new Date();
+        year = d.getFullYear();
+    } else {
+        year = year[0]
+    }
     $scope.showSendLoader = false;
     $scope.getList = function () {
         $scope.showPreloader = true;
-        $http.get('/getpearsons').then(function successCallback(response) {
+        $http.get('/getpearsons/' + year).then(function successCallback(response) {
             if(response.statusText.toUpperCase() == 'OK'){
-                console.log(response.data);
                 $scope.list = response.data;
                 $scope.showPreloader = false;
                 maxCount = response.data.reduce(function(max, x) { return (x.janusze.count > max) ? x.janusze.count : max; }, 0)
             }
         }, function errorCallback(response) {
-            console.log(response);
         });
     };
 
@@ -73,7 +79,6 @@ app.controller("januszelista", ['$scope', '$http', function ($scope, $http) {
             }, 300)
             $scope.getList();
         }, function errorCallback(response) {
-            console.log(response);
         });
     };
 
@@ -174,7 +179,6 @@ function dialog($this, content, title, close) {
             }, 300)
         }, 100)
         if($this.data('copy-id')){
-            console.log($this.data('janusz-id'));
             $('input#addjanuszPersone').val($this.data('janusz-id'))
         }
     }

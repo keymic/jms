@@ -11,19 +11,22 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/{year}", name="homepage", requirements={"year"="\d+"})
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $year = null)
     {
         $em = $this->getDoctrine()->getManager();
-
         $pearsonRepository = $em->getRepository('AppBundle:Pearson');
         $pearsons = $pearsonRepository->findAll();
 
-        $date = date('Y') . '-01-01';
-        $januszes = $em->createQuery("select j from AppBundle\Entity\Janusz j where j.date > '$date'")->getResult();
-
+        if(!is_numeric($year)){
+            $year = date('Y');
+        }
+        $dateStart = $year . '-01-01';
+        $dateEnd = $year . '-12-31';
+        $januszes = $em->createQuery("select j from AppBundle\Entity\Janusz j where j.date >= '$dateStart' AND j.date <= '$dateEnd'")->getResult();
         $ret = [];
+
         foreach ($pearsons as $pkey => $pearson) {
             $ret[$pkey]['id'] = $pearson->getId();
             $ret[$pkey]['name'] = $pearson->getName();
@@ -46,17 +49,21 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/getpearsons", name="getpearsons")
+     * @Route("/getpearsons/{year}", name="getpearsons", requirements={"year"="\d+"})
      */
-    public function getPearsonsWithJanuszesAction(Request $request)
+    public function getPearsonsWithJanuszesAction(Request $request, $year = null)
     {
         $em = $this->getDoctrine()->getManager();
 
         $pearsonRepository = $em->getRepository('AppBundle:Pearson');
         $pearsons = $pearsonRepository->findAll();
 
-        $date = date('Y') . '-01-01';
-        $januszes = $em->createQuery("select j from AppBundle\Entity\Janusz j where j.date > '$date'")->getResult();
+        if(!is_numeric($year)){
+            $year = date('Y');
+        }
+        $dateStart = $year . '-01-01';
+        $dateEnd = $year . '-12-31';
+        $januszes = $em->createQuery("select j from AppBundle\Entity\Janusz j where j.date >= '$dateStart' AND j.date <= '$dateEnd'")->getResult();
 
         $ret = [];
         foreach ($pearsons as $pkey => $pearson) {
